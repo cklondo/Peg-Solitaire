@@ -1,0 +1,1366 @@
+#include <iostream>
+#include <cmath>
+#include <time.h>  
+
+using namespace std;
+
+void FillTable(int * x, int Remove, int Size);
+void PrintTable(int * x);
+int MoveSelector(int *y);
+void MoveApplyingFunction(int*x, int n);
+void CheckMovesFunction(int*Table , int* MoveDatabase);
+int HowManyMoves(int * y);
+int EndingPegs(int * x);
+
+
+void CheckMovesZero (int* x,  int* y);
+void CheckMovesOne  (int* x, int* y);
+void CheckMovesTwo(int * x, int * y);
+void CheckMovesThree(int* x, int*y);
+void CheckMovesFour (int* x, int* y);
+void CheckMovesFive(int * x, int * y);
+void CheckMovesSix(int*x, int*y);
+void CheckMovesSeven(int*x,int*y);
+void CheckMovesEight(int*x, int*y);
+void CheckMovesNine(int*x, int*y);
+void CheckMovesTen(int*x, int*y);
+void CheckMovesEleven(int*x, int*y);
+void CheckMovesTwelve(int*x, int*y);
+void CheckMovesThirteen(int*x, int*y);
+void CheckMovesFourteen(int*x, int*y);
+void CheckMovesFifteen(int*x, int*y);
+void CheckMovesSixteen(int*x, int*y);
+void CheckMovesSeventeen(int*x, int*y);
+void CheckMovesEighteen(int*x, int*y);
+void CheckMovesNineteen(int*x, int*y);
+void CheckMovesTwenty(int*x, int*y);
+
+
+int main()
+{  
+    srand (time(NULL));
+    int Size=21;
+    int Table[Size];
+    int Remove=2;
+    int MoveDatabase[57];
+    FillTable(Table, Remove, Size);
+   
+   
+    int Move=0;
+    int MoveTotal=1;
+    int iterations=500;
+    int Final=0;
+    int counter=0;
+    for (int k =0; k< iterations ; k++)
+    {
+        FillTable(Table, Remove, Size);
+        counter=0;
+        MoveTotal=1;
+    while(MoveTotal !=0 || counter ==30)
+    {
+        //PrintTable(Table);
+        CheckMovesFunction(Table , MoveDatabase);
+        MoveTotal=HowManyMoves(MoveDatabase);
+        Move=MoveSelector(MoveDatabase);
+        MoveApplyingFunction(Table, Move);
+        counter++;
+    }
+    Final=EndingPegs(Table);
+    cout<< Final<<endl;
+    }
+
+
+    return 0;
+}
+
+
+int EndingPegs(int * x)
+{
+    int Total=0;
+   for(int i =0; i<21; i++)
+   {
+       Total= Total+*(x+i);
+   }
+   return Total;
+}
+int HowManyMoves(int * y)
+{
+    int Total=0;
+   for(int i =0; i<=57; i++)
+   {
+       Total= Total+*(y+i);
+   }
+   return Total;
+}
+int MoveSelector(int *y)
+{
+   int Total=0;
+   for(int i =0; i<=57; i++)
+   {
+       Total= Total+*(y+i);
+   }
+   //cout<< Total <<endl;
+   if (Total==0)
+   {
+       return -1;
+   }
+   else{
+   int* Selector= new int[Total];
+   int counter=0;
+   for(int j =0; j<=57 ; j++)
+   {
+       if(*(y+j)==1)
+       {
+           *(Selector+counter)=j;
+           counter++;
+       }
+   }
+   
+   int MovePosition= rand() % Total;
+   return *(Selector+MovePosition);
+   counter=0;
+   delete [] Selector;
+   }
+   
+  
+}
+
+//******************************
+// Move Applying Function
+//*******************************
+void MoveApplyingFunction(int*x, int n)
+{
+    if(n==0)
+    {
+        *(x)=0;
+        *(x+2)=0;
+        *(x+5)=1;
+    }
+    else if (n==1)
+    {
+        *(x)=0;
+        *(x+1)=0;
+        *(x+3)=1;
+    }
+    else if (n==2)
+    {
+        *(x+1)=0;
+        *(x+4)=0;
+        *(x+8)=1;
+    }
+    else if (n==3)
+    {
+        *(x+1)=0;
+        *(x+3)=0;
+        *(x+6)=1;
+    }
+    else if (n==4)
+    {
+        *(x+2)=0;
+        *(x+5)=0;
+        *(x+9)=1;
+    }
+    else if (n==5)
+    {
+        *(x+2)=0;
+        *(x+4)=0;
+        *(x+7)=1;
+    }
+    else if (n==6)
+    {
+        *(x+3)=0;
+        *(x+1)=0;
+        *(x+0)=1;
+    }
+    else if (n==7)
+    {
+        *(x+3)=0;
+        *(x+4)=0;
+        *(x+5)=1;
+    }
+    else if (n==8)
+    {
+        *(x+3)=0;
+        *(x+7)=0;
+        *(x+12)=1;
+    }
+    else if (n==9)
+    {
+        *(x+3)=0;
+        *(x+6)=0;
+        *(x+10)=1;
+    }
+    else if (n==10)
+    {
+        *(x+4)=0;
+        *(x+8)=0;
+        *(x+13)=1;
+    }
+    else if (n==11)
+    {
+        *(x+4)=0;
+        *(x+7)=0;
+        *(x+11)=1;
+    }
+    else if (n==12)
+    {
+        *(x+5)=0;
+        *(x+2)=0;
+        *(x+0)=1;
+    }
+    else if (n==13)
+    {
+        *(x+5)=0;
+        *(x+9)=0;
+        *(x+14)=1;
+    }
+    else if (n==14)
+    {
+        *(x+5)=0;
+        *(x+8)=0;
+        *(x+12)=1;
+    }
+    else if (n==15)
+    {
+        *(x+5)=0;
+        *(x+4)=0;
+        *(x+3)=1;
+    }
+    else if (n==16)
+    {
+        *(x+6)=0;
+        *(x+3)=0;
+        *(x+1)=1;
+    }
+    else if (n==17)
+    {
+        *(x+6)=0;
+        *(x+7)=0;
+        *(x+8)=1;
+    }
+    else if (n==18)
+    {
+        *(x+6)=0;
+        *(x+11)=0;
+        *(x+17)=1;
+    }
+    else if (n==19)
+    {
+        *(x+6)=0;
+        *(x+10)=0;
+        *(x+15)=1;
+    }
+    else if (n==20)
+    {
+        *(x+7)=0;
+        *(x+4)=0;
+        *(x+2)=1;
+    }
+    else if (n==21)
+    {
+        *(x+7)=0;
+        *(x+8)=0;
+        *(x+9)=1;
+    }
+    else if (n==22)
+    {
+        *(x+7)=0;
+        *(x+12)=0;
+        *(x+18)=1;
+    }
+    else if (n==23)
+    {
+        *(x+7)=0;
+        *(x+11)=0;
+        *(x+16)=1;
+    }
+    else if (n==24)
+    {
+        *(x+8)=0;
+        *(x+4)=0;
+        *(x+1)=1;
+    }
+    else if (n==25)
+    {
+        *(x+8)=0;
+        *(x+13)=0;
+        *(x+19)=1;
+    }
+    else if (n==26)
+    {
+        *(x+8)=0;
+        *(x+12)=0;
+        *(x+17)=1;
+    }
+    else if (n==27)
+    {
+        *(x+8)=0;
+        *(x+7)=0;
+        *(x+6)=1;
+    }
+    else if (n==28)
+    {
+        *(x+9)=0;
+        *(x+5)=0;
+        *(x+12)=1;
+    }
+    else if (n==29)
+    {
+        *(x+9)=0;
+        *(x+14)=0;
+        *(x+20)=1;
+    }
+    else if (n==30)
+    {
+        *(x+9)=0;
+        *(x+13)=0;
+        *(x+18)=1;
+    }
+    else if (n==31)
+    {
+        *(x+9)=0;
+        *(x+8)=0;
+        *(x+7)=1;
+    }
+    else if (n==32)
+    {
+        *(x+10)=0;
+        *(x+6)=0;
+        *(x+3)=1;
+    }
+    else if (n==33)
+    {
+        *(x+10)=0;
+        *(x+11)=0;
+        *(x+12)=1;
+    }
+    else if (n==34)
+    {
+        *(x+11)=0;
+        *(x+7)=0;
+        *(x+4)=1;
+    }
+    else if (n==35)
+    {
+        *(x+11)=0;
+        *(x+12)=0;
+        *(x+13)=1;
+    }
+    else if (n==36)
+    {
+        *(x+12)=0;
+        *(x+7)=0;
+        *(x+3)=1;
+    }
+    else if (n==37)
+    {
+        *(x+12)=0;
+        *(x+8)=0;
+        *(x+5)=1;
+    }
+    else if (n==38)
+    {
+        *(x+12)=0;
+        *(x+13)=0;
+        *(x+14)=1;
+    }
+    else if (n==39)
+    {
+        *(x+12)=0;
+        *(x+11)=0;
+        *(x+10)=1;
+    }
+    else if (n==40)
+    {
+        *(x+13)=0;
+        *(x+8)=0;
+        *(x+4)=1;
+    }
+    else if (n==41)
+    {
+        *(x+13)=0;
+        *(x+12)=0;
+        *(x+11)=1;
+    }
+    else if (n==42)
+    {
+        *(x+14)=0;
+        *(x+9)=0;
+        *(x+5)=1;
+    }
+    else if (n==43)
+    {
+        *(x+14)=0;
+        *(x+13)=0;
+        *(x+12)=1;
+    }
+    else if (n==44)
+    {
+        *(x+15)=0;
+        *(x+10)=0;
+        *(x+6)=1;
+    }
+    else if (n==45)
+    {
+        *(x+15)=0;
+        *(x+16)=0;
+        *(x+17)=1;
+    }
+    else if (n==46)
+    {
+        *(x+16)=0;
+        *(x+11)=0;
+        *(x+7)=1;
+    }
+    else if (n==47)
+    {
+        *(x+16)=0;
+        *(x+17)=0;
+        *(x+18)=1;
+    }
+    else if (n==48)
+    {
+        *(x+17)=0;
+        *(x+11)=0;
+        *(x+16)=1;
+    }
+    else if (n==49)
+    {
+        *(x+17)=0;
+        *(x+12)=0;
+        *(x+8)=1;
+    }
+    else if (n==50)
+    {
+        *(x+17)=0;
+        *(x+18)=0;
+        *(x+19)=1;
+    }
+    else if (n==51)
+    {
+        *(x+18)=0;
+        *(x+12)=0;
+        *(x+7)=1;
+    }
+    else if (n==52)
+    {
+        *(x+18)=0;
+        *(x+13)=0;
+        *(x+9)=1;
+    }
+    else if (n==53)
+    {
+        *(x+18)=0;
+        *(x+19)=0;
+        *(x+20)=1;
+    }
+    else if (n==54)
+    {
+        *(x+19)=0;
+        *(x+13)=0;
+        *(x+8)=1;
+    }
+    else if (n==55)
+    {
+        *(x+19)=0;
+        *(x+18)=0;
+        *(x+17)=1;
+    }
+    else if (n==56)
+    {
+        *(x+20)=0;
+        *(x+14)=0;
+        *(x+9)=1;
+    }
+    else if (n==57)
+    {
+        *(x+20)=0;
+        *(x+19)=0;
+        *(x+18)=1;
+    }
+}
+
+//*********************************
+// Check Moves Function
+//*********************************
+void CheckMovesFunction(int*Table , int* MoveDatabase)
+{
+    CheckMovesZero(Table, MoveDatabase);
+    CheckMovesOne(Table, MoveDatabase);
+    CheckMovesTwo(Table, MoveDatabase);
+    CheckMovesThree(Table, MoveDatabase);
+    CheckMovesFour (Table, MoveDatabase);
+    CheckMovesFive(Table, MoveDatabase);
+    CheckMovesSix(Table, MoveDatabase);
+    CheckMovesSeven(Table, MoveDatabase);
+    CheckMovesEight(Table, MoveDatabase);
+    CheckMovesNine(Table, MoveDatabase);
+    CheckMovesTen(Table, MoveDatabase);
+    CheckMovesEleven(Table, MoveDatabase);
+    CheckMovesTwelve(Table, MoveDatabase);
+    CheckMovesThirteen(Table, MoveDatabase);
+    CheckMovesFourteen(Table, MoveDatabase);
+    CheckMovesFifteen(Table, MoveDatabase);
+    CheckMovesSixteen(Table, MoveDatabase);
+    CheckMovesSeventeen(Table, MoveDatabase);
+    CheckMovesEighteen(Table, MoveDatabase);
+    CheckMovesNineteen(Table, MoveDatabase);
+    CheckMovesTwenty(Table, MoveDatabase);
+   
+}
+//*********************************
+// Check for moves in position Zero
+//*********************************
+void CheckMovesZero (int* x, int * y)
+{
+    if (*(x)==0)
+    {
+        *(y)=0;
+        *(y+1)=0;
+    }
+// admissible triple (0,2,5) in pos 0 for MoveDatabase
+    if (*(x)==1&& *(x+2)==1 && *(x+5)==0)
+    {
+        *(y)=1;
+    }
+    else if (*(x)==1 && *(x+2)==1 && *(x+5)==1)
+    {
+        *(y)=0;
+    }
+    else if (*(x)==1 && *(x+2)==0 && *(x+5)==1)
+    {
+        *(y)=0;
+    }
+   
+//admissible triple (0,1,3) in pos 1 for MoveDatabase
+    if (*(x)==1 && *(x+1)==1 && *(x+3)==0)
+    {
+        *(y+1)=1;
+    }
+   
+    else if (*(x)==1 && *(x+1)==1 && *(x+3)==1)
+    {
+        *(y+1)=0;
+    }
+    else if (*(x)==1 && *(x+1)==0 && *(x+3)==1)
+    {
+        *(y+1)=0;
+    }
+}
+
+
+//**************************
+//Check Moves in position One
+//**************************
+void CheckMovesOne(int * x , int * y)
+{
+    if (*(x+1)==0)
+    {
+        *(y+2)=0;
+        *(y+3)=0;
+    }
+//admissible triple (1,4,8) in pos 2 for MoveDatabase
+    if(*(x+1)==1 && *(x+4)==1 && *(x+8)==0)
+    {
+        *(y+2)=1;
+    }
+    else if (*(x+1)==1 && *(x+4)==1 && *(x+8)==1)
+    {
+        *(y+2)=0;
+    }
+    else if (*(x+1)==1 && *(x+4)==0 && *(x+8)==1)
+    {
+        *(y+2)=0;
+    }
+//admissible triple (1,3,6) in pos 3 for MoveDatabase
+    if (*(x+1)==1 && *(x+3)==1 && *(x+6)==0)
+    {
+        *(y+3)=1;
+    }
+    else if (*(x+1)==1 && *(x+3)==1 && *(x+6)==1)
+    {
+        *(y+3)=0;
+    }
+    else if (*(x+1)==1 && *(x+3)==0 && *(x+6)==1)
+    {
+        *(y+3)=0;
+    }
+}
+
+//**************************
+//Check Moves in position Two
+//**************************
+
+void CheckMovesTwo(int * x, int * y)
+{
+    if (*(x+2)==0)
+    {
+        *(y+4)=0;
+        *(y+5)=0;
+    }
+    // admissible triple (2,5,9) in pos 4 of MoveDatabase
+    if(*(x+2)==1 && *(x+5)==1&& *(x+9)==0)
+    {
+        *(y+4)=1;
+    }
+    else
+    {
+        *(y+4)=0;
+    }
+    //admissible triple (2,4,7) in pos 5 of MoveDatabase
+    if(*(x+2)==1 && *(x+4)==1 && *(x+7)==0)
+    {
+        *(y+5)=1;
+    }
+    else
+    {
+        *(y+5)=0;
+    }
+}
+
+//**************************
+//Check Moves in position Two
+//*************************
+void CheckMovesThree(int* x, int*y)
+{
+    if (*(x+3)==0)
+    {
+        *(y+6)=0;
+        *(y+7)=0;
+        *(y+8)=0;
+        *(y+9)=0;
+    }
+    // admissible triple (3,1,0) in pos 6 of MoveDatabase
+    if(*(x+3)==1 && *(x+1)==1 && *(x+0)==0)
+    {
+        *(y+6)=1;
+    }
+    else
+    {
+        *(y+6)=0;
+    }
+    // admissible triple (345) in pos 7 of MoveDatabase
+    if(*(x+3)==1 && *(x+4)==1 && *(x+5)==0)
+    {
+        *(y+7)=1;
+    }
+    else
+    {
+        *(y+7)=0;
+    }
+    //admissible triple (3,7,12) in pos 8 of MoveDatabase
+    if (*(x+3)==1 && *(x+7)==1 && *(x+12)==0)
+    {
+        *(y+8)=1;
+    }
+    else
+    {
+        *(y+8)=0;
+    }
+    //admissible triple (3,6,10) in pos 9 of MoveDatabase
+    if(*(x+3)==1 && *(x+6)==1 && *(x+10)==0)
+    {
+        *(y+9)=1;
+    }
+    else
+    {
+        *(y+9)=0;
+    }
+}
+
+//*********************
+//Check moves in position 4
+// ************************
+void CheckMovesFour (int* x, int* y)
+{
+    if (*(x+4)==0)
+    {
+        *(y+10)=0;
+        *(y+11)=0;
+    }
+    //admissible triple (4,8,13) in pos 10 of MoveDatabase
+    if(*(x+4)==1 && *(x+8)==1 && *(x+13)==0)
+    {
+        *(y+10)=1;
+    }
+    else
+    {
+        *(y+10)=0;
+    }
+    //admissible tripla (4,7,11) in pos 11 of MoveDatabase
+    if (*(x+4)==1 && *(x+7)==1 && *(x+11)==0)
+    {
+        *(y+11)=1;
+    }
+    else
+    {
+        *(y+11)=0;
+    }
+}
+
+
+
+//*********************
+//Check moves in position 5
+// ************************
+void CheckMovesFive(int * x, int * y)
+{
+    if (*(x+5)==0)
+    {
+        *(y+12)=0;
+        *(y+13)=0;
+        *(y+14)=0;
+        *(y+15)=0;
+    }
+    // admissible triple (5,2,0) in pos 12 of MoveDatabase
+    if(*(x+5)==1 && *(x+2)==1 && *(x+0)==0)
+    {
+        *(y+12)=1;
+    }
+    else
+    {
+        *(y+12)=0;
+    }
+     // admissible triple (5,9,14) in pos 13 of MoveDatabase
+    if(*(x+5)==1 && *(x+9)==1 && *(x+14)==0)
+    {
+        *(y+13)=1;
+    }
+    else
+    {
+        *(y+13)=0;
+    }
+     // admissible triple (5,8,12) in pos 14 of MoveDatabase
+    if(*(x+5)==1 && *(x+8)==1 && *(x+12)==0)
+    {
+        *(y+14)=1;
+    }
+    else
+    {
+        *(y+14)=0;
+    }
+     // admissible triple (5,2,0) in pos 15 of MoveDatabase
+    if(*(x+5)==1 && *(x+4)==1 && *(x+3)==0)
+    {
+        *(y+15)=1;
+    }
+    else
+    {
+        *(y+15)=0;
+    }
+}
+
+//*********************
+//Check moves in position 6
+// ************************
+
+void CheckMovesSix(int*x, int*y)
+{
+    if (*(x+6)==0)
+    {
+        *(y+16)=0;
+        *(y+17)=0;
+        *(y+18)=0;
+        *(y+19)=0;
+    }
+    //admissible triple (6,3,1) in pos 16 of MoveDatabase
+    if(*(x+6)==1 && *(x+3)==1 && *(x+1)==0)
+    {
+        *(y+16)=1;
+    }
+    else
+    {
+        *(y+16)=0;
+    }
+     //admissible triple (6,7,8) in pos 17 of MoveDatabase
+    if(*(x+6)==1 && *(x+7)==1 && *(x+8)==0)
+    {
+        *(y+17)=1;
+    }
+    else
+    {
+        *(y+17)=0;
+    }
+     //admissible triple (6,11,17) in pos 18 of MoveDatabase
+    if(*(x+6)==1 && *(x+11)==1 && *(x+17)==0)
+    {
+        *(y+18)=1;
+    }
+    else
+    {
+        *(y+18)=0;
+    }
+      //admissible triple (6,10,15) in pos 19 of MoveDatabase
+    if(*(x+6)==1 && *(x+10)==1 && *(x+15)==0)
+    {
+        *(y+19)=1;
+    }
+    else
+    {
+        *(y+19)=0;
+    }
+}  
+//*********************
+//Check moves in position 7
+// ************************
+
+void CheckMovesSeven(int*x,int*y)
+{
+  if(*(x+7)==0)
+  {
+      *(y+20)=0;
+      *(y+21)=0;
+      *(y+22)=0;
+      *(y+23)=0;
+  }  
+  //admissible triple (7,4,2) in pos 20 of MoveDatabase
+  if (*(x+7)==1 && *(x+4)==1 && *(x+2)==0)
+  {
+      *(y+20)=1;
+  }
+  else
+  {
+      *(y+20)=0;
+  }
+   //admissible triple (7,8,9) in pos 21 of MoveDatabase
+  if (*(x+7)==1 && *(x+8)==1 && *(x+9)==0)
+  {
+      *(y+21)=1;
+  }
+  else
+  {
+      *(y+21)=0;
+  }
+   //admissible triple (7,12,18) in pos 22 of MoveDatabase
+  if (*(x+7)==1 && *(x+12)==1 && *(x+18)==0)
+  {
+      *(y+22)=1;
+  }
+  else
+  {
+      *(y+22)=0;
+  }
+     //admissible triple (7,11,16) in pos 23 of MoveDatabase
+  if (*(x+7)==1 && *(x+11)==1 && *(x+16)==0)
+  {
+      *(y+23)=1;
+  }
+  else
+  {
+      *(y+23)=0;
+  }
+}
+
+//*********************
+//Check moves in position 8
+// ************************
+
+
+void CheckMovesEight(int*x, int*y)
+{
+    if(*(x+8)==0)
+    {
+        *(y+24)=0;
+        *(y+25)=0;
+        *(y+26)=0;
+        *(y+27)=0;
+    }
+    //admissible triple (8,4,1) in pos 24 of MoveDatabase
+    if (*(x+8)==1 && *(x+4)==1 && *(x+1)==0)
+    {
+        *(y+24)=1;
+    }
+    else
+    {
+        *(y+24)=0;
+    }
+       //admissible triple (8,13,19) in pos 25 of MoveDatabase
+    if (*(x+8)==1 && *(x+13)==1 && *(x+19)==0)
+    {
+        *(y+25)=1;
+    }
+    else
+    {
+        *(y+25)=0;
+    }
+        //admissible triple (8,12,17) in pos 26 of MoveDatabase
+    if (*(x+8)==1 && *(x+12)==1 && *(x+17)==0)
+    {
+        *(y+26)=1;
+    }
+    else
+    {
+        *(y+26)=0;
+    }
+         //admissible triple (8,7,6) in pos 26 of MoveDatabase
+    if (*(x+8)==1 && *(x+7)==1 && *(x+6)==0)
+    {
+        *(y+27)=1;
+    }
+    else
+    {
+        *(y+27)=0;
+    }
+}
+
+
+//*********************
+//Check moves in position 9
+// ************************
+
+void CheckMovesNine(int*x, int*y)
+{
+    if(*(x+9)==0)
+    {
+        *(y+28)=0;
+        *(y+29)=0;
+        *(y+30)=0;
+        *(y+31)=0;
+    }
+   
+   //admissible triple (9,5,12) in pos 28 of MoveDatabase
+    if (*(x+9)==1 && *(x+5)==1 && *(x+12)==0)
+    {
+        *(y+28)=1;
+    }
+    else
+    {
+        *(y+28)=0;
+    }
+     //admissible triple (9,14,20) in pos 29 of MoveDatabase
+    if (*(x+9)==1 && *(x+14)==1 && *(x+20)==0)
+    {
+        *(y+29)=1;
+    }
+    else
+    {
+        *(y+29)=0;
+    }
+    //admissible triple (9,13,18) in pos 30 of MoveDatabase
+    if (*(x+9)==1 && *(x+13)==1 && *(x+18)==0)
+    {
+        *(y+30)=1;
+    }
+    else
+    {
+        *(y+30)=0;
+    }
+    //admissible triple (9,8,7) in pos 31 of MoveDatabase
+    if (*(x+9)==1 && *(x+8)==1 && *(x+7)==0)
+    {
+        *(y+31)=1;
+    }
+    else
+    {
+        *(y+31)=0;
+    }
+}
+//*********************
+//Check moves in position 10
+// ************************
+void CheckMovesTen(int*x, int*y)
+{
+    if(*(x+10)==0)
+    {
+        *(y+32)=0;
+        *(y+33)=0;
+    }
+    //admissible triple (10,6,3) in pos 32 of MoveDatabase
+    if (*(x+10)==1 && *(x+6)==1 && *(x+3)==0)
+    {
+        *(y+32)=1;
+    }
+    else
+    {
+        *(y+32)=0;
+    }
+        //admissible triple (10,11,12) in pos 33 of MoveDatabase
+    if (*(x+10)==1 && *(x+11)==1 && *(x+12)==0)
+    {
+        *(y+33)=1;
+    }
+    else
+    {
+        *(y+33)=0;
+    }
+}
+//*********************
+//Check moves in position 11
+// ************************
+void CheckMovesEleven(int*x, int*y)
+{
+     if(*(x+11)==0)
+    {
+        *(y+34)=0;
+        *(y+35)=0;
+    }
+      //admissible triple (11,7,4) in pos 34 of MoveDatabase
+    if (*(x+11)==1 && *(x+7)==1 && *(x+4)==0)
+    {
+        *(y+34)=1;
+    }
+    else
+    {
+        *(y+34)=0;
+    }
+      //admissible triple (11,12,13) in pos 35 of MoveDatabase
+    if (*(x+11)==1 && *(x+12)==1 && *(x+13)==0)
+    {
+        *(y+35)=1;
+    }
+    else
+    {
+        *(y+35)=0;
+    }
+   
+}
+
+
+//*********************
+//Check moves in position 12
+// ************************
+void CheckMovesTwelve(int*x, int*y)
+{
+    if(*(x+12)==0)
+    {
+        *(y+36)=0;
+        *(y+37)=0;
+        *(y+38)=0;
+        *(y+39)=0;
+    }
+        //admissible triple (12,7,3) in pos 36 of MoveDatabase
+    if (*(x+12)==1 && *(x+7)==1 && *(x+3)==0)
+    {
+        *(y+36)=1;
+    }
+    else
+    {
+        *(y+36)=0;
+    }
+    //admissible triple (12,8,5) in pos 37 of MoveDatabase
+    if (*(x+12)==1 && *(x+8)==1 && *(x+5)==0)
+    {
+        *(y+37)=1;
+    }
+    else
+    {
+        *(y+37)=0;
+    }
+    //admissible triple (12,13,14) in pos 38 of MoveDatabase
+    if (*(x+12)==1 && *(x+13)==1 && *(x+14)==0)
+    {
+        *(y+38)=1;
+    }
+    else
+    {
+        *(y+38)=0;
+    }
+    //admissible triple (12,11,10) in pos 39 of MoveDatabase
+    if (*(x+12)==1 && *(x+11)==1 && *(x+10)==0)
+    {
+        *(y+39)=1;
+    }
+    else
+    {
+        *(y+39)=0;
+    }
+}
+//*********************
+//Check moves in position 13
+// ************************
+
+void CheckMovesThirteen(int*x, int*y)
+{
+    if (*(x+13)==0)
+    {
+        *(y+40)=0;
+        *(y+41)=0;
+    }
+    //admissible triple (13,8,4) in pos 40 of MoveDatabase
+    if (*(x+13)==1 && *(x+8)==1 && *(x+4)==0)
+    {
+        *(y+40)=1;
+    }
+    else
+    {
+        *(y+40)=0;
+    }
+    //admissible triple (13,12,11) in pos 41 of MoveDatabase
+    if (*(x+13)==1 && *(x+12)==1 && *(x+11)==0)
+    {
+        *(y+41)=1;
+    }
+    else
+    {
+        *(y+41)=0;
+    }
+}
+
+//*********************
+//Check moves in position 14
+// ************************
+void CheckMovesFourteen(int*x, int*y)
+{
+     if (*(x+14)==0)
+    {
+        *(y+42)=0;
+        *(y+43)=0;
+    }
+    //admissible triple (14,9,5) in pos 42 of MoveDatabase
+    if (*(x+14)==1 && *(x+9)==1 && *(x+5)==0)
+    {
+        *(y+42)=1;
+    }
+    else
+    {
+        *(y+42)=0;
+    }
+    //admissible triple (14,13,12) in pos 43 of MoveDatabase
+    if (*(x+14)==1 && *(x+13)==1 && *(x+12)==0)
+    {
+        *(y+43)=1;
+    }
+    else
+    {
+        *(y+43)=0;
+    }
+}
+//*********************
+//Check moves in position 15
+// ************************
+void CheckMovesFifteen(int*x, int*y)
+{
+      if (*(x+15)==0)
+    {
+        *(y+44)=0;
+        *(y+45)=0;
+    }
+    //admissible triple (15,10,6) in pos 44 of MoveDatabase
+    if (*(x+15)==1 && *(x+10)==1 && *(x+6)==0)
+    {
+        *(y+44)=1;
+    }
+    else
+    {
+        *(y+44)=0;
+    }
+     //admissible triple (15,16,17) in pos 45 of MoveDatabase
+    if (*(x+15)==1 && *(x+16)==1 && *(x+17)==0)
+    {
+        *(y+45)=1;
+    }
+    else
+    {
+        *(y+45)=0;
+    }
+}
+//*********************
+//Check moves in position 16
+// ************************
+void CheckMovesSixteen(int*x, int*y)
+{
+     if (*(x+16)==0)
+    {
+        *(y+46)=0;
+        *(y+47)=0;
+    }
+   
+    //admissible triple (16,11,7) in pos 46 of MoveDatabase
+    if (*(x+16)==1 && *(x+11)==1 && *(x+7)==0)
+    {
+        *(y+46)=1;
+    }
+    else
+    {
+        *(y+46)=0;
+    }
+       //admissible triple (16,17,18) in pos 47 of MoveDatabase
+    if (*(x+16)==1 && *(x+17)==1 && *(x+18)==0)
+    {
+        *(y+47)=1;
+    }
+    else
+    {
+        *(y+47)=0;
+    }
+}
+//*********************
+//Check moves in position 17
+// ************************
+void CheckMovesSeventeen(int*x, int*y)
+{
+      if (*(x+17)==0)
+    {
+        *(y+48)=0;
+        *(y+49)=0;
+        *(y+50)=0;
+    }
+    //admissible triple (17,11,16) in pos 48 of MoveDatabase
+    if (*(x+17)==1 && *(x+11)==1 && *(x+16)==0)
+    {
+        *(y+48)=1;
+    }
+    else
+    {
+        *(y+48)=0;
+    }
+    //admissible triple (17,12,8) in pos 49 of MoveDatabase
+    if (*(x+17)==1 && *(x+12)==1 && *(x+8)==0)
+    {
+        *(y+49)=1;
+    }
+    else
+    {
+        *(y+49)=0;
+    }
+       //admissible triple (17,18,19) in pos 50 of MoveDatabase
+    if (*(x+17)==1 && *(x+18)==1 && *(x+19)==0)
+    {
+        *(y+50)=1;
+    }
+    else
+    {
+        *(y+50)=0;
+    }
+}
+
+//*********************
+//Check moves in position 18
+// ************************
+void CheckMovesEighteen(int*x, int*y)
+{
+      if (*(x+18)==0)
+    {
+        *(y+51)=0;
+        *(y+52)=0;
+        *(y+53)=0;
+    }
+ //admissible triple (18,12,7) in pos 51 of MoveDatabase
+    if (*(x+18)==1 && *(x+12)==1 && *(x+7)==0)
+    {
+        *(y+51)=1;
+    }
+    else
+    {
+        *(y+51)=0;
+    }
+     //admissible triple (18,13,9) in pos 52 of MoveDatabase
+    if (*(x+18)==1 && *(x+13)==1 && *(x+9)==0)
+    {
+        *(y+52)=1;
+    }
+    else
+    {
+        *(y+52)=0;
+    }
+    //admissible triple (18,19,20) in pos 53 of MoveDatabase
+    if (*(x+18)==1 && *(x+19)==1 && *(x+20)==0)
+    {
+        *(y+53)=1;
+    }
+    else
+    {
+        *(y+53)=0;
+    }
+}
+//*********************
+//Check moves in position 19
+// ************************
+void CheckMovesNineteen(int*x, int*y)
+{
+      if (*(x+19)==0)
+    {
+        *(y+54)=0;
+        *(y+55)=0;
+    }
+     //admissible triple (19,13,8) in pos 54 of MoveDatabase
+    if (*(x+19)==1 && *(x+13)==1 && *(x+8)==0)
+    {
+        *(y+54)=1;
+    }
+    else
+    {
+        *(y+54)=0;
+    }
+    //admissible triple (19,18,17) in pos 55 of MoveDatabase
+    if (*(x+19)==1 && *(x+18)==1 && *(x+17)==0)
+    {
+        *(y+55)=1;
+    }
+    else
+    {
+        *(y+55)=0;
+    }
+}
+//*********************
+//Check moves in position 20
+// ************************
+void CheckMovesTwenty(int*x, int*y)
+{
+      if (*(x+20)==0)
+    {
+        *(y+56)=0;
+        *(y+57)=0;
+    }
+     //admissible triple (20,14,9) in pos 56 of MoveDatabase
+    if (*(x+20)==1 && *(x+14)==1 && *(x+9)==0)
+    {
+        *(y+56)=1;
+    }
+    else
+    {
+        *(y+56)=0;
+    }
+    //admissible triple (20,19,18) in pos 57 of MoveDatabase
+    if (*(x+20)==1 && *(x+19)==1 && *(x+18)==0)
+    {
+        *(y+57)=1;
+    }
+    else
+    {
+        *(y+57)=0;
+    }
+}
+// Fill Table
+void FillTable(int * x, int Remove, int Size)
+{
+    if (Remove==0)
+    {
+        *(x)=0;
+        for(int i=1; i<=Size ; i++)
+        {
+            *(x+i)=1;
+        }
+    }
+    else if (1<= Remove && Remove <= Size)
+    {
+        *(x+Remove)=0;
+        for (int i =0; i<Remove ; i++)
+        {
+            *(x+i)=1;
+        }
+        for (int j = Remove+1; j<=Size; j++)
+        {
+            *(x+j)=1;
+        }
+    }
+    else
+    {
+        for(int k=0; k<=Size ; k++)
+        {
+            *(x+k)=1;
+        }
+    }
+}
+
+
+// Print Table
+void PrintTable(int * x)
+{
+    cout<<"     "<<*(x)<<"     "<<endl;
+    cout<<"    "<< *(x+1)<<" "<< *(x+2)<< "    "<< endl;
+    cout<<"   "<<*(x+3) <<" "<< *(x+4)<<" "<< *(x+5)<< "   "<< endl;
+    cout<<"  "<< *(x+6)<< " "<< *(x+7)<<" "<< *(x+8)<< " "<< *(x+9)<< endl;
+    cout<<" "<<*(x+10) << " " <<*(x+11)<< " "<< *(x+12)<<" "<< *(x+13)<< " " <<*(x+14)<< " "<<endl;
+    cout<< *(x+15) << " "<< *(x+16) << " " << *(x+17) << " "<<*(x+18)<<" "<< *(x+19)<< " " << *(x+20)<< endl;
+}
